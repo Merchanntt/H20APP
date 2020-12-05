@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "H20app",
-    "slug": "H20app",
+    "name": "H2Oapp",
+    "slug": "H2Oapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
