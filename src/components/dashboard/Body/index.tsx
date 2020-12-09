@@ -1,6 +1,8 @@
-import React from 'react';
-import {FontAwesome5} from '@expo/vector-icons'
+import React, { useState } from 'react';
+import { FontAwesome5 } from '@expo/vector-icons'
 import { FlatList } from 'react-native-gesture-handler';
+
+import Background from '../../../assets/BackgroundImage.png';
 
 import {
   Container,
@@ -9,15 +11,17 @@ import {
   PercentageData,
   CupsMissing,
   CupsContainer,
+  CupButton,
   CupSize,
   ConfirmCupButton
 } from './styles';
 
 const Body: React.FC = () => {
   const cupSize = ['1/2 COPO', '1 COPO', '1.5 COPO']
+  const [selectedCup, setSelectedCup] = useState(1);
 
   return (
-    <Container>
+    <Container source={Background} resizeMode='stretch'>
 
       <PercentageContainer>
         <DayTitle>HOJE</DayTitle>
@@ -28,12 +32,13 @@ const Body: React.FC = () => {
       <CupsContainer>
         <FlatList
           data={cupSize}
-          snapToInterval={5}
 
           style={{overflow: 'visible'}}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={(item) => (
-              <CupSize>{item.item}</CupSize>
+          renderItem={({item, index}) => (
+            <CupButton onPress={() => setSelectedCup(index)}>
+              <CupSize isSelected={selectedCup === index}>{item}</CupSize>
+            </CupButton>
           )}
         />
         <ConfirmCupButton>

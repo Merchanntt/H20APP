@@ -1,9 +1,13 @@
 import { BorderlessButton } from 'react-native-gesture-handler';
 import styled from 'styled-components/native'
 
-export const Container = styled.View`
+interface CupsTextProps {
+  isSelected: boolean;
+}
+
+export const Container = styled.ImageBackground`
   flex: 1;
-  background-color: #0d1fe9;
+  position: relative;
   padding: 28px 16px;
   border-radius: 10px;
   flex-direction: row;
@@ -40,12 +44,14 @@ export const CupsContainer = styled.View`
   flex-direction: row;
 `;
 
-export const CupSize = styled.Text`
+export const CupButton = styled(BorderlessButton)``;
+
+export const CupSize = styled.Text<CupsTextProps>`
   font-family: 'Oswald_400Regular';
   text-align: right;
-  color: #f3f6fc;
-  font-size: 14px;
-  margin-top: 4px;
+  color: ${(props) => props.isSelected ? '#f3f6fc' : '#a2acdf'};
+  font-size: ${(props) => props.isSelected ? '20px' : '12px'};
+  margin-top: 6px;
   margin-right: 12px;
 `;
 

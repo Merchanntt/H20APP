@@ -16,7 +16,7 @@ export const Title = styled.Text`
   font-size: 16px;
 `;
 
-export const RightStepView = styled.View`
+export const StepView = styled.View`
   width: 32px;
 `;
 
