@@ -6,9 +6,10 @@ const OnBoardingBody: React.FC = () => {
   return (
     <Container>
       <Description>
-        ENTÃO VOCÊ DESEJA TER UMA VIDA MAIS SAUDÁVEL?! {'\n'}
-        ANTES DE TUDO... VAMOS PRECISAR DE ALGUMAS INFORMAÇÕES, PARA
-        CRIAR UMA META QUE MELHOR ATENDA AS SUAS NECESSIDADES.
+        ENTÃO VOCÊ DESEJA TER UMA VIDA SAUDÁVEL?! {'\n'}
+        MAS ANTES DE COMEÇARMOS... {'\n'}
+        PRECISAREMOS DE ALGUNS DADOS PARA ENCONTRAR {'\n'}
+        A SUA META IDEAL.
       </Description>
     </Container>
   );

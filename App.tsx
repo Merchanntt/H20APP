@@ -1,4 +1,5 @@
 import React from 'react';
+import {RecoilRoot} from 'recoil';
 import { AppLoading } from 'expo';
 import { StatusBar } from 'expo-status-bar';
 import { Oswald_300Light, Oswald_400Regular ,Oswald_500Medium, Oswald_700Bold, useFonts } from '@expo-google-fonts/oswald'
@@ -17,10 +18,10 @@ export default function App() {
     return <AppLoading/>
   } else {
       return (
-        <>
+        <RecoilRoot>
           <StatusBar hidden/>
           <Routes />
-        </>
+        </RecoilRoot>
       )
   }
 }

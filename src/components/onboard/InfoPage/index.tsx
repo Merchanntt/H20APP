@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Description } from '../WelcomePage/styles';
+import { useNavigation } from '@react-navigation/native';
 import Lottie from 'lottie-react-native';
 
 import BreathingDot from '../../../assets/BreathingDot.json'
@@ -13,21 +14,29 @@ import {
 
 const OnBoardingInfo: React.FC = () => {
   const AnimationRef = useRef<Lottie>(null)
+  const {navigate} = useNavigation()
+
   const [weight, setWeight] = useState('')
   const [isFilled, setIsFilled] = useState(false)
 
   useEffect(() => {
-    if(weight.length >= 2) {
-      AnimationRef.current?.play()
+    if(weight.length === 2) {
       setIsFilled(true)
+      AnimationRef.current?.play()
+    } else {
+      AnimationRef.current?.reset()
     }
   }, [weight])
+
+  const handleNavigateToConfirmatiomPage = useCallback(() => {
+    navigate('ConfirmationPage', { weight })
+  }, [weight, navigate])
 
   return (
     <Container>
       <Description>
-        NOS INFORME SEU PESO,
-        PARA QUE POSSAMOS CALCULAR A QUANTIDADE DIÁRIA IDEAL DE H2O.
+        POR FAVOR, INFORME SEU PESO
+        PARA CALCULAR A SUA QUANTIDADE DIÁRIA DE HIDRATAÇÃO.
       </Description>
       <WeightContainer>
         <WeightInput
@@ -37,8 +46,13 @@ const OnBoardingInfo: React.FC = () => {
           onChangeText={(e) => setWeight(e)}
         />
       </WeightContainer>
-        <ConfirmButton>
-          <Lottie source={BreathingDot} loop={isFilled} />
+        <ConfirmButton onPress= {handleNavigateToConfirmatiomPage}>
+          <Lottie
+            ref={AnimationRef}
+            source={BreathingDot}
+            loop={isFilled}
+            speed={2}
+          />
         </ConfirmButton>
     </Container>
   );

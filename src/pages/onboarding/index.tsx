@@ -13,7 +13,8 @@ const Onboarding: React.FC = () => {
   const scrollViewRef = useRef<ScrollView>(null)
 
   const [secondPage, setSecondPage] = useState(false)
-  const {width} = Dimensions.get('screen')
+
+  const { width } = Dimensions.get('screen')
 
   const handleScrollTheView = useCallback(() => {
     scrollViewRef.current?.scrollTo({x: width, y: 0, animated: true })
