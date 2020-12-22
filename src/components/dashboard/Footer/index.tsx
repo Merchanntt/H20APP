@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
+import { useRecoilValue } from 'recoil';
+
+import { concludeGoal } from '../../../store/RecoilAtom';
 
 import {
   Container,
@@ -13,7 +16,10 @@ import {
 } from './styles';
 
 const Footer: React.FC = () => {
-  const drops = [1, 2, 3 , 4, 5, 6, 7, 8]
+  const concludeGoalState = useRecoilValue(concludeGoal)
+  const [streakDays, setStreakDays] = useState<Number | undefined>()
+
+  const drops = [0, 1, 2, 3, 4, 5, 6, 7]
 
   return (
     <Container>
@@ -22,10 +28,11 @@ const Footer: React.FC = () => {
           <FlatList
             numColumns={4}
             data={drops}
+            scrollEnabled = {false}
             keyExtractor={(item, index) => index.toString()}
-            renderItem={() => (
+            renderItem={({item, index}) => (
             <DropContainer>
-              <Drop />
+              <Drop goalBeated={streakDays === index}/>
             </DropContainer>
             )}
           />

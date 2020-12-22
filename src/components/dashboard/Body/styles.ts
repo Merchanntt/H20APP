@@ -17,12 +17,17 @@ export const Container = styled.ImageBackground`
 
 export const PercentageContainer = styled.View`
   flex: 1;
+  min-width: 40px;
 `;
 
 export const DayTitle = styled.Text`
   font-family: 'Oswald_500Medium';
   color: #f3f6fc;
   font-size: 16px;
+`;
+
+export const PeercentageContainer = styled.View`
+  flex-direction: row;
 `;
 
 export const PercentageData = styled.Text`

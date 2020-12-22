@@ -1,5 +1,9 @@
 import styled from 'styled-components/native'
 
+interface DropProps {
+  goalBeated: boolean;
+}
+
 export const Container = styled.View`
   flex-direction: row;
   justify-content: space-between;
@@ -24,15 +28,16 @@ export const DropContainer = styled.View`
   margin-top: 28px;
   `;
 
-export const Drop = styled.View`
+export const Drop = styled.View<DropProps>`
   height: 30px;
   width: 30px;
-  background-color: #546cf4;
+  background-color: ${props => props.goalBeated ? '#546cf4' : '#a2acdf'};
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   border-top-left-radius: 15px;
   transform: rotate(-40deg);
   margin-right: 6px;
+  overflow: hidden;
 `;
 
 export const InfoContainer = styled.View`
