@@ -9,6 +9,14 @@ export const Container = styled.View`
   z-index: 1;
 `;
 
+
+export const TrophyContainer = styled.View`
+  justify-content: center;
+  margin-top: 24px;
+  height: 220px;
+  width: 220px;
+`;
+
 export const ConfirmationContainer = styled.View`
   background-color: #F3F6FC;
   width: 80%;

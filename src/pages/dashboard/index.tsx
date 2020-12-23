@@ -21,7 +21,10 @@ const DashBoard: React.FC = () => {
           <GoalConcludeConfirmation />
         </>
       )}
-      <Header title='NIVEL DE HIDRATAÇÃO'/>
+      <Header
+        title='NIVEL DE HIDRATAÇÃO'
+        animation= 'fadeIn'
+      />
       <Body />
       <Footer />
     </Container>

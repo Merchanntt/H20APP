@@ -26,7 +26,7 @@ export const DayTitle = styled.Text`
   font-size: 16px;
 `;
 
-export const PeercentageContainer = styled.View`
+export const PercentageMainContainer = styled.View`
   flex-direction: row;
 `;
 

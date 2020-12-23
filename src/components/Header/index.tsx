@@ -1,4 +1,5 @@
 import React from 'react';
+import * as Animatable from 'react-native-animatable';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import {Feather} from '@expo/vector-icons'
 
@@ -7,11 +8,17 @@ import { Container, Title, StepView } from './styles';
 interface HeaderProps {
   title: string;
   isOnBoarding?: boolean;
+  animation: string;
 }
 
-const Header: React.FC<HeaderProps> = ({isOnBoarding, title}) => {
+const AnimatedContainer = Animatable.createAnimatableComponent(Container)
+
+const Header: React.FC<HeaderProps> = ({isOnBoarding, title, animation}) => {
   return (
-    <Container>
+    <AnimatedContainer
+      animation= {animation}
+      delay={1000}
+    >
       { isOnBoarding
         ? <StepView />
         : <BorderlessButton>
@@ -20,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({isOnBoarding, title}) => {
       }
       <Title>{title}</Title>
       <StepView />
-    </Container>
+    </AnimatedContainer>
   );
 }
 

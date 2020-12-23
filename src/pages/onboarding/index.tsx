@@ -23,7 +23,11 @@ const Onboarding: React.FC = () => {
 
   return (
     <Container>
-      <Header title='SEJA BEM-VINDO,' isOnBoarding={true}/>
+      <Header
+        title='SEJA BEM-VINDO,'
+        isOnBoarding={true}
+        animation= ''
+      />
       <Main
         ref={scrollViewRef}
         horizontal

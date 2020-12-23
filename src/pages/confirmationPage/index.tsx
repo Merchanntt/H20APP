@@ -26,7 +26,7 @@ import {
 
 const ConfirmationPage: React.FC = () => {
   const Route = useRoute()
-  const { navigate, reset } = useNavigation()
+  const { reset, navigate } = useNavigation()
   const { WaterCalculator } = WaterCalculatorUtils;
 
   const [isLoading, setIsLoading] = useState(true);

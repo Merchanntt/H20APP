@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import NumberAnimation from 'react-native-animated-number';
-import { FontAwesome5 } from '@expo/vector-icons'
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { FlatList } from 'react-native-gesture-handler';
+
+import * as Animatable from 'react-native-animatable';
+import NumberAnimation from 'react-native-animated-number';
+import { FontAwesome5 } from '@expo/vector-icons'
 
 import { userProgress, userHealthly, concludeGoal } from '../../../store/RecoilAtom';
 import WaterCalculator from '../../../utils/WaterCalculator';
@@ -13,7 +15,7 @@ import {
   Container,
   PercentageContainer,
   DayTitle,
-  PeercentageContainer,
+  PercentageMainContainer,
   PercentageData,
   CupsMissing,
   CupsContainer,
@@ -21,6 +23,10 @@ import {
   CupSize,
   ConfirmCupButton
 } from './styles';
+
+const AnimatedPercentageContainer = Animatable.createAnimatableComponent(PercentageContainer);
+const AnimatedCupsContainer = Animatable.createAnimatableComponent(CupsContainer);
+
 
 const Body: React.FC = () => {
   const [userProgressData, setUserProgressData] = useRecoilState(userProgress);
@@ -42,9 +48,11 @@ const Body: React.FC = () => {
       setPercentageWidth(80)
     }
     if (userProgressData.percentage >= 100) {
-      let dayStreakNumber = concludeGoalState.dayStreak.pop() ?? 0
+      const dayStreakLength = concludeGoalState.dayStreak.length
 
-      const dayStreak = [...concludeGoalState.dayStreak, dayStreakNumber + 1]
+      const dayStreak = [ ...concludeGoalState.dayStreak, dayStreakLength ]
+
+      console.log(dayStreak)
 
       setCompletedGoalInfo(true)
       setPercentageWidth(110)
@@ -82,48 +90,57 @@ const Body: React.FC = () => {
   ])
 
   return (
-    <Container source={Background} resizeMode='stretch'>
+    <Animatable.View
+      style={{flex: 1}}
+      animation= 'pulse'
+      duration={2000}
+    >
+      <Container source={Background} resizeMode='stretch'>
 
-      <PercentageContainer>
-        <DayTitle>HOJE</DayTitle>
+        <AnimatedPercentageContainer animation='fadeIn'>
+          <DayTitle>HOJE</DayTitle>
 
-        <PeercentageContainer>
-          <NumberAnimation
-            value= {userProgressData.percentage}
-            time= {100}
-            style= {{
-              fontFamily: 'Oswald_700Bold',
-              color: '#f3f6fc',
-              fontSize: 72,
-              marginTop: 8,
-              minWidth: percentageWidth
-            }}
+          <PercentageMainContainer>
+            <NumberAnimation
+              value= {userProgressData.percentage}
+              time= {80}
+              style= {{
+                fontFamily: 'Oswald_700Bold',
+                color: '#f3f6fc',
+                fontSize: 72,
+                marginTop: 8,
+                minWidth: percentageWidth
+              }}
+            />
+            <PercentageData>%</PercentageData>
+          </PercentageMainContainer>
+          {completedGoalInfo
+            ? <CupsMissing>VOCÊ ATINGIU SUA META!</CupsMissing>
+            : <CupsMissing>{userProgressData.cupsMissing} COPOS FALTANDO</CupsMissing>
+          }
+        </AnimatedPercentageContainer>
+
+        <AnimatedCupsContainer animation='fadeIn'>
+          <FlatList
+            data={cupSize}
+            style={{overflow: 'visible'}}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({item, index}) => (
+              <CupButton onPress={() => handleSetCup(item, index)}>
+                <CupSize isSelected={selectedCup === index}>{item}</CupSize>
+              </CupButton>
+            )}
           />
-          <PercentageData>%</PercentageData>
-        </PeercentageContainer>
-        {completedGoalInfo
-          ? <CupsMissing>VOCÊ ATINGIU SUA META!</CupsMissing>
-          : <CupsMissing>{userProgressData.cupsMissing} COPOS FALTANDO</CupsMissing>
-        }
-      </PercentageContainer>
+          <ConfirmCupButton
+            enabled={!completedGoalInfo}
+            onPress={handleProgressCalculator}
+          >
+            <FontAwesome5 name='plus-circle' size={24} color='#f3f6fc'/>
+          </ConfirmCupButton>
+        </AnimatedCupsContainer>
 
-      <CupsContainer>
-        <FlatList
-          data={cupSize}
-          style={{overflow: 'visible'}}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({item, index}) => (
-            <CupButton onPress={() => handleSetCup(item, index)}>
-              <CupSize isSelected={selectedCup === index}>{item}</CupSize>
-            </CupButton>
-          )}
-        />
-        <ConfirmCupButton onPress={handleProgressCalculator}>
-          <FontAwesome5 name='plus-circle' size={24} color='#f3f6fc'/>
-        </ConfirmCupButton>
-      </CupsContainer>
-
-    </Container>
+      </Container>
+    </Animatable.View>
   );
 }
 

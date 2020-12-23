@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FlatList } from 'react-native-gesture-handler';
+import * as Animatable from 'react-native-animatable';
 import { useRecoilValue } from 'recoil';
 
 import { concludeGoal } from '../../../store/RecoilAtom';
@@ -15,16 +16,18 @@ import {
   SubInfoText,
 } from './styles';
 
+const AnimatedContainer = Animatable.createAnimatableComponent(Container)
+const TitleAnimation = Animatable.createAnimatableComponent(Title)
+
 const Footer: React.FC = () => {
   const concludeGoalState = useRecoilValue(concludeGoal)
-  const [streakDays, setStreakDays] = useState<Number | undefined>()
 
   const drops = [0, 1, 2, 3, 4, 5, 6, 7]
 
   return (
-    <Container>
+    <AnimatedContainer animation= 'bounceInUp' duration={1500}>
       <LevelContainer>
-        <Title>NÍVEL ATUAL DE H2O</Title>
+        <TitleAnimation animation= 'fadeIn' delay={1000}>NÍVEL ATUAL DE H2O</TitleAnimation>
           <FlatList
             numColumns={4}
             data={drops}
@@ -32,18 +35,18 @@ const Footer: React.FC = () => {
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item, index}) => (
             <DropContainer>
-              <Drop goalBeated={streakDays === index}/>
+              <Drop goalBeated={concludeGoalState.dayStreak.indexOf(index) === index}/>
             </DropContainer>
             )}
           />
       </LevelContainer>
 
       <InfoContainer>
-        <Title>VISÃO GERAL</Title>
+        <TitleAnimation animation= 'fadeIn' delay={1000}>VISÃO GERAL</TitleAnimation>
         <InfoText>23% UP</InfoText>
         <SubInfoText>COMPARADO À {'\n'} ÚLTIMA SEMANA</SubInfoText>
       </InfoContainer>
-    </Container>
+    </AnimatedContainer>
   );
 }
 
