@@ -52,8 +52,6 @@ const Body: React.FC = () => {
 
       const dayStreak = [ ...concludeGoalState.dayStreak, dayStreakLength ]
 
-      console.log(dayStreak)
-
       setCompletedGoalInfo(true)
       setPercentageWidth(110)
       setConcludeGoalState({
