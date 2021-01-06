@@ -14,7 +14,7 @@ import {
 
 const OnBoardingInfo: React.FC = () => {
   const AnimationRef = useRef<Lottie>(null)
-  const {navigate} = useNavigation()
+  const Navigate = useNavigation()
 
   const [weight, setWeight] = useState('')
   const [isFilled, setIsFilled] = useState(false)
@@ -29,8 +29,8 @@ const OnBoardingInfo: React.FC = () => {
   }, [weight])
 
   const handleNavigateToConfirmatiomPage = useCallback(() => {
-    navigate('ConfirmationPage', { weight })
-  }, [weight, navigate])
+    Navigate.navigate('ConfirmationPage', { weight })
+  }, [weight, Navigate])
 
   return (
     <Container>
@@ -40,13 +40,14 @@ const OnBoardingInfo: React.FC = () => {
       </Description>
       <WeightContainer>
         <WeightInput
+          testID='weight-input'
           maxLength={2}
           keyboardType='number-pad'
           placeholder='00'
           onChangeText={(e) => setWeight(e)}
         />
       </WeightContainer>
-        <ConfirmButton onPress= {handleNavigateToConfirmatiomPage}>
+        <ConfirmButton testID='confirmation-button' onPress= {handleNavigateToConfirmatiomPage}>
           <Lottie
             ref={AnimationRef}
             source={BreathingDot}

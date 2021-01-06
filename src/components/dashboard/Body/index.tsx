@@ -27,7 +27,6 @@ import {
 const AnimatedPercentageContainer = Animatable.createAnimatableComponent(PercentageContainer);
 const AnimatedCupsContainer = Animatable.createAnimatableComponent(CupsContainer);
 
-
 const Body: React.FC = () => {
   const [userProgressData, setUserProgressData] = useRecoilState(userProgress);
   const userHeathlyData = useRecoilValue(userHealthly);
@@ -93,13 +92,14 @@ const Body: React.FC = () => {
       animation= 'pulse'
       duration={2000}
     >
-      <Container source={Background} resizeMode='stretch'>
+      <Container testID='background-test' source={Background} resizeMode='stretch'>
 
         <AnimatedPercentageContainer animation='fadeIn'>
-          <DayTitle>HOJE</DayTitle>
+          <DayTitle testID='day-title-test'>HOJE</DayTitle>
 
           <PercentageMainContainer>
             <NumberAnimation
+              testID='percentage-number-test'
               value= {userProgressData.percentage}
               time= {80}
               style= {{
@@ -110,30 +110,37 @@ const Body: React.FC = () => {
                 minWidth: percentageWidth
               }}
             />
-            <PercentageData>%</PercentageData>
+            <PercentageData testID='percentage-icon-test'>%</PercentageData>
           </PercentageMainContainer>
           {completedGoalInfo
-            ? <CupsMissing>VOCÊ ATINGIU SUA META!</CupsMissing>
-            : <CupsMissing>{userProgressData.cupsMissing} COPOS FALTANDO</CupsMissing>
+            ? <CupsMissing testID='cups-concluded-test'>VOCÊ ATINGIU SUA META!</CupsMissing>
+            : <CupsMissing testID='cups-missing-test'>{userProgressData.cupsMissing} COPOS FALTANDO</CupsMissing>
           }
         </AnimatedPercentageContainer>
 
         <AnimatedCupsContainer animation='fadeIn'>
           <FlatList
+            testID='cups-size-test'
             data={cupSize}
             style={{overflow: 'visible'}}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item, index}) => (
-              <CupButton onPress={() => handleSetCup(item, index)}>
+              <CupButton testID='cups-size-button-test' onPress={() => handleSetCup(item, index)}>
                 <CupSize isSelected={selectedCup === index}>{item}</CupSize>
               </CupButton>
             )}
           />
           <ConfirmCupButton
+            testID='confirm-cup-size-button-test'
             enabled={!completedGoalInfo}
             onPress={handleProgressCalculator}
           >
-            <FontAwesome5 name='plus-circle' size={24} color='#f3f6fc'/>
+            <FontAwesome5
+              testID='confirm-cup-size-icon-test'
+              name='plus-circle'
+              size={24}
+              color='#f3f6fc'
+            />
           </ConfirmCupButton>
         </AnimatedCupsContainer>
 

@@ -20,13 +20,18 @@ const Header: React.FC<HeaderProps> = ({isOnBoarding, title, animation}) => {
       delay={1000}
     >
       { isOnBoarding
-        ? <StepView />
-        : <BorderlessButton>
-            <Feather name='align-justify' size={32} color='#a2acdf'/>
+        ? <StepView testID='step-view-left-test'/>
+        : <BorderlessButton testID='button-test' >
+            <Feather
+              testID='icon-test'
+              name='align-justify'
+              size={32}
+              color='#a2acdf'
+            />
           </BorderlessButton>
       }
-      <Title>{title}</Title>
-      <StepView />
+      <Title testID='title-test'>{title}</Title>
+      <StepView testID='step-view-right-test'/>
     </AnimatedContainer>
   );
 }
